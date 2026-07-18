@@ -592,6 +592,12 @@ h1::first-line {
     var(--sheet);
 }
 
+.project-card:only-child {
+  grid-column: 1 / -1;
+  width: min(100%, 720px);
+  justify-self: center;
+}
+
 .project-lang,
 .project-meta {
   color: var(--olive);
