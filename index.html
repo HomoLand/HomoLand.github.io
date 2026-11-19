@@ -3,20 +3,26 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>HomoLand - The Promised Land of Homo</title>
+    <title>HomoLand — The Promised Land of Homo</title>
     <meta
       name="description"
-      content="HomoLand organization landing page, profile README, and public projects."
+      content="HomoLand 下北泽红茶屋风味开源实验室：5 位同居先辈、7 个活跃自托管项目与组织宣言。"
     >
-    <meta property="og:title" content="HomoLand">
-    <meta property="og:description" content="The Promised Land of Homo">
+    <meta property="og:title" content="HomoLand — The Promised Land of Homo">
+    <meta property="og:description" content="下北泽风味的硬核自托管实验室 · 人类未来的愿景与挑战">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://homo.land">
     <meta property="og:image" content="https://avatars.githubusercontent.com/u/143146450?v=4">
     <link rel="canonical" href="https://homo.land">
     <link rel="stylesheet" href="./styles.css">
+    <script src="./app.js" defer></script>
   </head>
   <body>
+    <div class="vhs-hud" aria-hidden="true">
+      <span class="vhs-rec"><i class="vhs-dot"></i>REC ● 2001.08.10 11:45:14</span>
+      <span class="vhs-tape">SP · SHIMOKITA CH-04</span>
+    </div>
+
     <header class="site-header" aria-label="Site header">
       <a class="brand" href="#top" aria-label="HomoLand home">
         <img
@@ -25,75 +31,498 @@
           width="40"
           height="40"
         >
-        <span>HomoLand</span>
+        <span class="brand-name">HomoLand</span>
+        <span class="brand-badge">NO. 114514</span>
       </a>
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="#readme">README</a>
-        <a href="#projects">Projects</a>
-        <a href="https://github.com/HomoLand">GitHub</a>
-      </nav>
+
+      <div class="header-right">
+        <nav class="nav" aria-label="Primary navigation">
+          <a href="#members">成员</a>
+          <a href="#projects">项目</a>
+          <a href="#readme">宣言</a>
+          <a href="#chronicle">年表</a>
+          <a href="https://github.com/HomoLand" target="_blank" rel="noopener">GitHub</a>
+        </nav>
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          type="button"
+          aria-pressed="false"
+          title="切换午后红茶 / 昏睡 VHS 模式"
+        >
+          ☕ 昏睡模式
+        </button>
+      </div>
     </header>
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="kicker">github.com/HomoLand</p>
+          <p class="tape-strip">CH-04 · SHIMOKITAZAWA · 11:45:14 · GITHUB.COM/HOMOLAND</p>
           <h1 id="hero-title">The Promised Land of Homo</h1>
-          <p class="hero-subtitle">
-            人类未来的愿景与挑战
-          </p>
+          <p class="hero-subtitle">下北泽风味的硬核自托管实验室 · 人类未来的愿景与挑战</p>
           <p class="hero-text">
-            自建工具、网关和奇怪实验的公开书架。
+            在这里，我们折腾咖啡机 BLE 控温冲煮、跨平台红心歌单同步、轻量化 VPN 网关、DSH 余额血条插件，以及一切「压力马斯内，但真的能稳定跑起来」的开源工程。
           </p>
-          <div class="hero-actions" aria-label="Primary links">
-            <a class="button button-primary" href="#projects">看项目</a>
-            <a class="button" href="https://github.com/HomoLand">进组织</a>
+
+          <div class="hero-actions" aria-label="Primary actions">
+            <a class="button button-primary" href="#projects">看全部项目 (7)</a>
+            <a class="button" href="#members">认识 5 位先辈</a>
+            <button id="tea-btn" class="button button-tea" type="button">
+              ☕ 请我喝红茶 <span id="tea-count" class="tea-count">0</span>
+            </button>
           </div>
+
+          <p id="tea-toast" class="tea-toast" role="status" aria-live="polite">
+            红茶已温在桌角，随时点一杯开启屋顶日光浴。
+          </p>
+
+          <dl class="metrics-strip" aria-label="Organization metrics">
+            <div class="metric-cell">
+              <dt>全员 Admin 同居人</dt>
+              <dd>05</dd>
+            </div>
+            <div class="metric-cell">
+              <dt>活跃公开仓库</dt>
+              <dd>07</dd>
+            </div>
+            <div class="metric-cell">
+              <dt>恒定精神年龄（岁）</dt>
+              <dd>24</dd>
+            </div>
+            <div class="metric-cell">
+              <dt>自托管执念浓度</dt>
+              <dd>114%</dd>
+            </div>
+          </dl>
         </div>
 
-        <aside class="identity-panel" aria-label="Organization identity">
-          <img
-            class="identity-avatar"
-            src="https://avatars.githubusercontent.com/u/143146450?v=4"
-            alt="HomoLand organization avatar"
-            width="180"
-            height="180"
-          >
-          <div class="identity-section identity-lines" aria-label="Profile details">
-            <strong>PROFILE</strong>
-            <span>Location: Japan</span>
-            <span>Email: homo@homo.land</span>
-            <span>Public projects: 4</span>
+        <aside class="dossier-panel" aria-label="Organization dossier">
+          <div class="dossier-top">
+            <span class="dossier-tag">ORG DOSSIER · NO. 114514</span>
+            <svg
+              class="tea-stamp"
+              viewBox="0 0 96 96"
+              width="74"
+              height="74"
+              role="img"
+              aria-label="先辈认证 114514 印章"
+            >
+              <circle cx="48" cy="48" r="43" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="5 3" />
+              <circle cx="48" cy="48" r="35" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <text x="48" y="42" text-anchor="middle" font-size="13" font-weight="800" fill="currentColor">先辈认证</text>
+              <text x="48" y="61" text-anchor="middle" font-size="12" font-weight="800" fill="currentColor" font-family="monospace">114514</text>
+            </svg>
           </div>
-          <div class="identity-section identity-links" aria-label="Friendly links">
-            <strong>LINKS</strong>
-            <a class="friend-link" href="https://blog.sajo.cc">
-              <img
-                src="https://avatars.githubusercontent.com/u/20022853?v=4"
-                alt="SajoLuo GitHub avatar"
-                width="34"
-                height="34"
-              >
-              <span>
-                <b>SajoLuo</b>
-                <small>blog.sajo.cc</small>
-              </span>
-            </a>
+
+          <div class="dossier-head">
+            <img
+              class="identity-avatar"
+              src="https://avatars.githubusercontent.com/u/143146450?v=4"
+              alt="HomoLand organization avatar"
+              width="96"
+              height="96"
+            >
+            <div class="dossier-id">
+              <strong>HOMOLAND LAB</strong>
+              <span>应许之地档案馆</span>
+              <small>EST. 2023.08.25</small>
+            </div>
           </div>
-          <div class="identity-section identity-memes" aria-label="Field notes">
-            <strong>FIELD NOTES</strong>
-            <span>いいよ、来いよ</span>
-            <span>24岁，是学生</span>
-            <span>先辈认证：能跑就行，能维护更好</span>
-            <span>やりますねぇ</span>
+
+          <dl class="dossier-facts">
+            <div>
+              <dt>Location</dt>
+              <dd>下北泽 / Japan</dd>
+            </div>
+            <div>
+              <dt>Domain</dt>
+              <dd>homo.land</dd>
+            </div>
+            <div>
+              <dt>Contact</dt>
+              <dd><a href="mailto:homo@homo.land">homo@homo.land</a></dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              <dd>24岁，是开源组织</dd>
+            </div>
+          </dl>
+
+          <div class="quote-card" aria-label="Field notes">
+            <div class="quote-card-head">
+              <strong>FIELD NOTES · 屋顶语录</strong>
+              <button id="quote-next" class="quote-next" type="button">换一条 ↻</button>
+            </div>
+            <blockquote id="quote-box" class="quote-box">
+              <p class="quote-line">「いいよ、来いよ」</p>
+              <footer class="quote-note">PR 欢迎，直接提就行</footer>
+            </blockquote>
           </div>
         </aside>
       </section>
 
+      <section id="members" class="members-section" aria-labelledby="members-title">
+        <div class="section-heading">
+          <p class="kicker">HOUSEMATES</p>
+          <h2 id="members-title">屋顶的五位先辈</h2>
+          <p class="section-subtitle">全员 Admin，无上下级，各自在不同技术深水区整活的 HomoLand 居民档案。</p>
+        </div>
+
+        <div class="member-grid">
+          <article class="member-card">
+            <div class="member-top">
+              <img
+                class="member-avatar"
+                src="https://avatars.githubusercontent.com/u/20022853?v=4"
+                alt="Sajo avatar"
+                width="64"
+                height="64"
+                loading="lazy"
+              >
+              <div class="member-meta">
+                <div class="member-name-row">
+                  <h3>Sajo</h3>
+                  <span class="role-badge">ADMIN</span>
+                </div>
+                <p class="member-handle">@SajoLuo</p>
+                <p class="member-title">屋顶茶艺师 · Infra &amp; Hardware</p>
+              </div>
+            </div>
+            <p class="member-bio">
+              彷徨中清醒。主导 xBloom 咖啡机冲煮生态、跨平台歌单同步、aTrust 轻网关与 Homelab 基础设施折腾。
+            </p>
+            <ul class="tag-list" aria-label="Sajo skills">
+              <li>Rust</li>
+              <li>TypeScript</li>
+              <li>Python</li>
+              <li>Homelab</li>
+            </ul>
+            <p class="member-note">「先用 xBloom 冲一杯 93°C 红茶再修 Bug」</p>
+            <div class="member-links">
+              <a href="https://github.com/SajoLuo" target="_blank" rel="noopener">GitHub ↗</a>
+              <a href="https://blog.sajo.cc" target="_blank" rel="noopener">Blog ↗</a>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-top">
+              <img
+                class="member-avatar"
+                src="https://avatars.githubusercontent.com/u/38127990?v=4"
+                alt="小毛 avatar"
+                width="64"
+                height="64"
+                loading="lazy"
+              >
+              <div class="member-meta">
+                <div class="member-name-row">
+                  <h3>小毛</h3>
+                  <span class="role-badge">ADMIN</span>
+                </div>
+                <p class="member-handle">@maoyulong413</p>
+                <p class="member-title">血条锻造师 · DSH Plugins</p>
+              </div>
+            </div>
+            <p class="member-bio">
+              把 DeepSeek API 余额做成 Minecraft / 暗黑 / 守望 / 三国杀游戏血条的男人，同时维护 DSH 远程配置平面放行补丁。
+            </p>
+            <ul class="tag-list" aria-label="小毛 skills">
+              <li>JavaScript</li>
+              <li>Shell</li>
+              <li>DSH 插件</li>
+            </ul>
+            <p class="member-note">「余额掉到最后一格勾玉，压力马斯内」</p>
+            <div class="member-links">
+              <a href="https://github.com/maoyulong413" target="_blank" rel="noopener">GitHub ↗</a>
+              <a href="https://github.com/HomoLand/dshp-balance-hp" target="_blank" rel="noopener">dshp-balance-hp ↗</a>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-top">
+              <img
+                class="member-avatar"
+                src="https://avatars.githubusercontent.com/u/27613908?v=4"
+                alt="ztelliot avatar"
+                width="64"
+                height="64"
+                loading="lazy"
+              >
+              <div class="member-meta">
+                <div class="member-name-row">
+                  <h3>ztelliot</h3>
+                  <span class="role-badge">ADMIN</span>
+                </div>
+                <p class="member-handle">@ztelliot</p>
+                <p class="member-title">测速观测员 · Go &amp; Networking</p>
+              </div>
+            </div>
+            <p class="member-bio">
+              来自浙江大学的 Go / Python 网络与运维玩家，打造了 239★ 的 taierspeed-cli、分布式网络诊断 mtr、DDNS 与 macOS 媒体小工具。
+            </p>
+            <ul class="tag-list" aria-label="ztelliot skills">
+              <li>Go</li>
+              <li>Python</li>
+              <li>TypeScript</li>
+              <li>Network</li>
+            </ul>
+            <p class="member-note">「先跑一轮 mtr，看看下北泽延迟是不是 114ms」</p>
+            <div class="member-links">
+              <a href="https://github.com/ztelliot" target="_blank" rel="noopener">GitHub ↗</a>
+              <a href="https://github.com/ztelliot/taierspeed-cli" target="_blank" rel="noopener">taierspeed-cli ↗</a>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-top">
+              <img
+                class="member-avatar"
+                src="https://avatars.githubusercontent.com/u/57243380?v=4"
+                alt="sarailQAQ avatar"
+                width="64"
+                height="64"
+                loading="lazy"
+              >
+              <div class="member-meta">
+                <div class="member-name-row">
+                  <h3>sarailQAQ</h3>
+                  <span class="role-badge">ADMIN</span>
+                </div>
+                <p class="member-handle">@sarailQAQ</p>
+                <p class="member-title">存储炼金师 · Systems &amp; DB</p>
+              </div>
+            </div>
+            <p class="member-bio">
+              偏好 Rust、C++ 与 Go 底层研发，手搓了「我推的数据库」oshinodb 与 Rust 版 mini-lsm 等存储引擎项目。
+            </p>
+            <ul class="tag-list" aria-label="sarailQAQ skills">
+              <li>Rust</li>
+              <li>C++</li>
+              <li>Go</li>
+              <li>Database</li>
+            </ul>
+            <p class="member-note">「LSM-Tree Compaction 中，屋顶日光浴勿扰」</p>
+            <div class="member-links">
+              <a href="https://github.com/sarailQAQ" target="_blank" rel="noopener">GitHub ↗</a>
+              <a href="https://sarailqaq.org.cn" target="_blank" rel="noopener">主页 ↗</a>
+            </div>
+          </article>
+
+          <article class="member-card">
+            <div class="member-top">
+              <img
+                class="member-avatar"
+                src="https://avatars.githubusercontent.com/u/57106748?v=4"
+                alt="RayleighZ avatar"
+                width="64"
+                height="64"
+                loading="lazy"
+              >
+              <div class="member-meta">
+                <div class="member-name-row">
+                  <h3>RayleighZ</h3>
+                  <span class="role-badge">ADMIN</span>
+                </div>
+                <p class="member-handle">@RayleighZ</p>
+                <p class="member-title">斜方肌抗争者 · Embedded &amp; Ops</p>
+              </div>
+            </div>
+            <p class="member-bio">
+              C / Java / Kotlin / Go 跨界整活玩家，涉猎 51 单片机、CameraX、xv6 学习笔记与 Prometheus Exporter，并长期与斜方肌酸痛抗争。
+            </p>
+            <ul class="tag-list" aria-label="RayleighZ skills">
+              <li>C</li>
+              <li>Go</li>
+              <li>Java</li>
+              <li>Embedded</li>
+            </ul>
+            <p class="member-note">「Trapezius = THE FUCKING SOURCE OF PAIN」</p>
+            <div class="member-links">
+              <a href="https://github.com/RayleighZ" target="_blank" rel="noopener">GitHub ↗</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="projects" class="projects-section" aria-labelledby="projects-title">
+        <div class="section-heading">
+          <p class="kicker">PUBLIC SHELF</p>
+          <h2 id="projects-title">公开项目货架</h2>
+          <p class="section-subtitle">7 个持续演进的公开仓库，涵盖冲煮控制、跨平台曲库同步、网络网关与 DSH 生态插件。</p>
+        </div>
+
+        <div class="filter-bar" role="tablist" aria-label="项目分类筛选">
+          <button class="filter-chip is-active" type="button" role="tab" aria-selected="true" data-filter="all">
+            全部 (7)
+          </button>
+          <button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="xbloom">
+            xBloom 冲煮生态 (3)
+          </button>
+          <button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="dsh">
+            DSH 插件与补丁 (2)
+          </button>
+          <button class="filter-chip" type="button" role="tab" aria-selected="false" data-filter="tools">
+            网关与同步工具 (2)
+          </button>
+        </div>
+
+        <div id="project-grid" class="project-grid">
+          <article class="project-card featured" data-category="xbloom">
+            <div class="project-top">
+              <span class="project-lang">TypeScript · ★ 1</span>
+              <span class="project-owner">@SajoLuo</span>
+            </div>
+            <h3>
+              <a href="https://github.com/HomoLand/xbloom-studio-web" target="_blank" rel="noopener">
+                xbloom-studio-web
+              </a>
+            </h3>
+            <p>
+              xBloom Studio 本地 Web UI，支持 AI 配方设计、BLE 桥接控制、局域网鉴权与免后端 Web Bluetooth 静态 SPA。
+            </p>
+            <div class="project-foot">
+              <span class="project-meta">Web UI / AI 配方 / Web BLE</span>
+              <div class="project-links">
+                <a href="https://github.com/HomoLand/xbloom-studio-web" target="_blank" rel="noopener">仓库 ↗</a>
+                <a class="link-pill" href="https://homoland.github.io/xbloom-studio-web/" target="_blank" rel="noopener">在线 SPA ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="xbloom">
+            <div class="project-top">
+              <span class="project-lang">Python · ★ 1</span>
+              <span class="project-owner">@SajoLuo</span>
+            </div>
+            <h3>
+              <a href="https://github.com/HomoLand/xbloom-studio-brew" target="_blank" rel="noopener">
+                xbloom-studio-brew
+              </a>
+            </h3>
+            <p>
+              面向 Codex / Hermes 等 Agent 的可移植冲煮技能与受控本地 BLE 核心库，负责咖啡豆参数解析与协议帧安全下发。
+            </p>
+            <div class="project-foot">
+              <span class="project-meta">Agent Skill / BLE Core</span>
+              <div class="project-links">
+                <a href="https://github.com/HomoLand/xbloom-studio-brew" target="_blank" rel="noopener">仓库 ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="xbloom">
+            <div class="project-top">
+              <span class="project-lang">Python</span>
+              <span class="project-owner">@SajoLuo</span>
+            </div>
+            <h3>
+              <a href="https://github.com/HomoLand/xbloom-studio-ha" target="_blank" rel="noopener">
+                xbloom-studio-ha
+              </a>
+            </h3>
+            <p>
+              xBloom Studio 的 Home Assistant HACS 集成，通过本地 xbloom-bridge 瘦客户端接入智能家居仪表盘与自动化。
+            </p>
+            <div class="project-foot">
+              <span class="project-meta">Home Assistant / HACS</span>
+              <div class="project-links">
+                <a href="https://github.com/HomoLand/xbloom-studio-ha" target="_blank" rel="noopener">仓库 ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card featured" data-category="tools">
+            <div class="project-top">
+              <span class="project-lang">JavaScript</span>
+              <span class="project-owner">@SajoLuo</span>
+            </div>
+            <h3>
+              <a href="https://github.com/HomoLand/music-likes-sync" target="_blank" rel="noopener">
+                music-likes-sync
+              </a>
+            </h3>
+            <p>
+              本地优先的 Apple Music / QQ 音乐 / 网易云音乐红心歌单同步工作流，内置确定性匹配证据、音频试听与人工复核队列。
+            </p>
+            <div class="project-foot">
+              <span class="project-meta">歌单同步 / React / MCP</span>
+              <div class="project-links">
+                <a href="https://github.com/HomoLand/music-likes-sync" target="_blank" rel="noopener">仓库 ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card featured" data-category="tools">
+            <div class="project-top">
+              <span class="project-lang">Rust · ★ 4</span>
+              <span class="project-owner">@SajoLuo</span>
+            </div>
+            <h3>
+              <a href="https://github.com/HomoLand/atrust-lite-gateway" target="_blank" rel="noopener">
+                atrust-lite-gateway
+              </a>
+            </h3>
+            <p>
+              纯 SDK 实现的深信服 aTrust 轻量网关，隧道建连后直接暴露 SOCKS5 代理与本地 DNS 能力，告别整机接管客户端。
+            </p>
+            <div class="project-foot">
+              <span class="project-meta">Gateway / VPN / SOCKS5</span>
+              <div class="project-links">
+                <a href="https://github.com/HomoLand/atrust-lite-gateway" target="_blank" rel="noopener">仓库 ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="dsh">
+            <div class="project-top">
+              <span class="project-lang">JavaScript</span>
+              <span class="project-owner">@maoyulong413</span>
+            </div>
+            <h3>
+              <a href="https://github.com/HomoLand/dshp-balance-hp" target="_blank" rel="noopener">
+                dshp-balance-hp
+              </a>
+            </h3>
+            <p>
+              DSH Web GUI 的 DeepSeek 余额血量条插件，支持 Minecraft 红心、暗黑血球、守望量化条、三国杀勾玉等多种皮肤。
+            </p>
+            <div class="project-foot">
+              <span class="project-meta">DSH Plugin / 余额血条</span>
+              <div class="project-links">
+                <a href="https://github.com/HomoLand/dshp-balance-hp" target="_blank" rel="noopener">仓库 ↗</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-category="dsh">
+            <div class="project-top">
+              <span class="project-lang">Shell</span>
+              <span class="project-owner">@maoyulong413</span>
+            </div>
+            <h3>
+              <a href="https://github.com/HomoLand/dsh-remote-access-patch" target="_blank" rel="noopener">
+                dsh-remote-access-patch
+              </a>
+            </h3>
+            <p>
+              幂等、可逐字节回滚的 DSH 远程设置与插件管理放行补丁，适用于已前置 Authelia / SSO 认证层的内网远程访问。
+            </p>
+            <div class="project-foot">
+              <span class="project-meta">DSH Patch / Remote Ops</span>
+              <div class="project-links">
+                <a href="https://github.com/HomoLand/dsh-remote-access-patch" target="_blank" rel="noopener">仓库 ↗</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section id="readme" class="readme-section" aria-labelledby="readme-title">
         <div class="section-heading">
-          <p class="kicker">Organization README</p>
-          <h2 id="readme-title">愿景与挑战</h2>
+          <p class="kicker">ORGANIZATION MANIFESTO</p>
+          <h2 id="readme-title">宣言与编年史</h2>
+          <p class="section-subtitle">越是下北泽风味的整活主页，越要认真写一份人类未来的宏大愿景。</p>
         </div>
 
         <article class="readme-body">
@@ -149,52 +578,75 @@
               </p>
             </div>
 
-            <aside class="chronicle-panel" aria-label="HomoLand chronicle">
-              <p class="chronicle-label">PUBLIC CHRONICLE</p>
+            <aside id="chronicle" class="chronicle-panel" aria-label="HomoLand chronicle">
+              <p class="chronicle-label">PUBLIC CHRONICLE · 组织编年史</p>
               <ol class="chronicle-list">
                 <li>
                   <time datetime="2023-08-25">2023.08</time>
-                  <span>HomoLand organization created on GitHub.</span>
+                  <span>HomoLand 组织在 GitHub 成立，5 位 Admin 元老正式集结。</span>
                 </li>
                 <li>
                   <time datetime="2023-11-10">2023.11</time>
-                  <span>Organization profile README opened.</span>
+                  <span>发布组织宣言 README《人类未来的愿景与挑战》。</span>
                 </li>
                 <li>
                   <time datetime="2026-06-01">2026.06</time>
-                  <span>atrust-lite-gateway went public.</span>
+                  <span><code>atrust-lite-gateway</code> 开源，<code>homo.land</code> 初版主页上线。</span>
                 </li>
                 <li>
-                  <time datetime="2026-06-23">2026.06</time>
-                  <span>homo.land landing page shipped.</span>
+                  <time datetime="2026-07-23">2026.07</time>
+                  <span><code>xbloom-studio-ha</code> 接入 Home Assistant，开启红茶与咖啡控温冲煮线。</span>
+                </li>
+                <li>
+                  <time datetime="2026-08-22">2026.08</time>
+                  <span><code>dshp-balance-hp</code> 与 <code>dsh-remote-access-patch</code> 上架，DSH 整活双星登场。</span>
+                </li>
+                <li>
+                  <time datetime="2026-11-19">2026.11</time>
+                  <span><code>xbloom-studio-web/brew</code> 与 <code>music-likes-sync</code> V1 齐聚 main，下北泽红茶屋主页焕新。</span>
                 </li>
               </ol>
             </aside>
           </div>
         </article>
       </section>
-
-      <section id="projects" class="projects-section" aria-labelledby="projects-title">
-        <div class="section-heading">
-          <p class="kicker">Public Projects</p>
-          <h2 id="projects-title">已经公开的项目</h2>
-        </div>
-
-        <div class="project-grid">
-          <a class="project-card featured" href="https://github.com/HomoLand/atrust-lite-gateway">
-            <span class="project-lang">PowerShell</span>
-            <h3>atrust-lite-gateway</h3>
-            <p>SDK-only Sangfor aTrust gateway that exposes SOCKS5 after tunnel connection.</p>
-            <span class="project-meta">Gateway / VPN / SOCKS5</span>
-          </a>
-        </div>
-      </section>
     </main>
 
     <footer class="site-footer">
-      <span>HomoLand</span>
-      <span>README synced from GitHub on 2026-06-24.</span>
-      <a href="https://github.com/HomoLand/HomoLand.github.io">Page source</a>
+      <div class="footer-left">
+        <strong>HomoLand · The Promised Land of Homo</strong>
+        <span>Updated 2026-11-19</span>
+      </div>
+      <div class="footer-right">
+        <button id="homo-calc-open" class="footer-button" type="button">114514 数字论证</button>
+        <a href="https://github.com/HomoLand" target="_blank" rel="noopener">Organization</a>
+        <a href="https://github.com/HomoLand/HomoLand.github.io" target="_blank" rel="noopener">Page source</a>
+      </div>
     </footer>
+
+    <dialog id="homo-dialog" class="homo-dialog" aria-labelledby="homo-dialog-title">
+      <div class="dialog-head">
+        <div>
+          <p class="kicker">HOMO PROOF ENGINE</p>
+          <h2 id="homo-dialog-title">恶臭数字论证器（114514）</h2>
+        </div>
+        <button id="homo-dialog-close" class="dialog-close" type="button" aria-label="关闭弹窗">✕</button>
+      </div>
+      <p class="dialog-desc">
+        万事万物皆可用 <code>1, 1, 4, 5, 1, 4</code> 论证。输入任意整数或点击组织快捷数字试试看：
+      </p>
+      <div class="preset-chips" aria-label="快捷数字">
+        <button class="preset-chip" type="button" data-num="5">5 位成员</button>
+        <button class="preset-chip" type="button" data-num="7">7 个项目</button>
+        <button class="preset-chip" type="button" data-num="24">24 岁</button>
+        <button class="preset-chip" type="button" data-num="2026">2026 年</button>
+      </div>
+      <form id="homo-form" class="homo-form">
+        <label class="sr-only" for="homo-input">目标整数</label>
+        <input id="homo-input" type="number" step="1" value="24" placeholder="输入整数，例如 24 或 2026">
+        <button class="button button-primary" type="submit">论证</button>
+      </form>
+      <div id="homo-result" class="homo-result" aria-live="polite"></div>
+    </dialog>
   </body>
 </html>
