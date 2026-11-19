@@ -687,8 +687,7 @@ h1::first-line {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 6px 8px;
+  gap: 8px;
 }
 
 .member-name-row h3 {
@@ -697,34 +696,6 @@ h1::first-line {
   font-family: var(--display);
   font-size: 1.2rem;
   font-weight: 700;
-}
-
-.member-aka {
-  color: var(--ink-soft);
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  font-weight: 600;
-}
-
-.member-badges {
-  display: inline-flex;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 5px;
-  margin-left: auto;
-}
-
-.affil-badge {
-  padding: 2px 7px;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  color: var(--olive);
-  font-family: var(--mono);
-  font-size: 0.66rem;
-  font-weight: 800;
-  background: var(--paper);
-  white-space: nowrap;
 }
 
 .role-badge {
@@ -759,6 +730,19 @@ h1::first-line {
   color: var(--ink-soft);
   font-size: 0.92rem;
   line-height: 1.55;
+}
+
+.member-inline-link {
+  color: var(--oxblood);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+  transition: color 140ms ease, text-decoration-color 140ms ease;
+}
+
+.member-inline-link:hover {
+  color: var(--amber);
+  text-decoration-color: var(--amber);
 }
 
 .tag-list {
@@ -841,7 +825,7 @@ h1::first-line {
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 16px;
 }
 
@@ -849,8 +833,8 @@ h1::first-line {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: 214px;
-  padding: 20px;
+  min-height: 220px;
+  padding: 18px;
   border: 1px solid var(--line);
   border-radius: 7px;
   background: var(--sheet);
@@ -894,7 +878,7 @@ h1::first-line {
   margin: 2px 0 0;
   color: var(--oxblood);
   font-family: var(--display);
-  font-size: clamp(1.28rem, 2vw, 1.65rem);
+  font-size: clamp(1.12rem, 1.55vw, 1.32rem);
   font-weight: 700;
   line-height: 1.15;
 }
@@ -906,7 +890,7 @@ h1::first-line {
 .project-card p {
   margin: 0;
   color: var(--ink-soft);
-  font-size: 0.94rem;
+  font-size: 0.9rem;
   line-height: 1.55;
 }
 
@@ -915,7 +899,7 @@ h1::first-line {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px 10px;
   margin-top: auto;
   padding-top: 12px;
   border-top: 1px solid var(--line);
@@ -932,8 +916,10 @@ h1::first-line {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  margin-left: auto;
   color: var(--oxblood);
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .project-links a:hover {
@@ -1217,7 +1203,8 @@ h1::first-line {
 }
 
 @media (max-width: 1020px) {
-  .member-grid {
+  .member-grid,
+  .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 

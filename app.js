@@ -96,6 +96,9 @@
     if (target === 7) {
       return "1 + 1 + 4 + 5 * 1 - 4";
     }
+    if (target === 9) {
+      return "1 - 1 + 4 + 5 * (1 ** 4)";
+    }
     if (target === 24) {
       return "11 + 4 + 5 + 1 * 4";
     }
