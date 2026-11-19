@@ -2,27 +2,27 @@
   const FIELD_QUOTES = [
     {
       line: "「いいよ、来いよ」",
-      note: "PR 欢迎，代码写好直接提就行",
+      note: "欢迎提交 PR",
     },
     {
       line: "「やりますねぇ」",
-      note: "CI 全绿、Pages 构建通过，好时代来临力",
+      note: "CI 全绿，构建通过",
     },
     {
       line: "「红茶可以吗？」",
-      note: "xBloom 93°C 昏睡手冲已就位，先喝一口再查日志",
+      note: "xBloom 93°C 手冲就绪",
     },
     {
       line: "「24岁，是学生」",
-      note: "也是五个全员 Admin 的自托管折腾狂魔",
+      note: "全员 Admin 维护中",
     },
     {
       line: "「王道征途」",
-      note: "能跑就行，能长期维护且不炸网络更好",
+      note: "能跑就行，能长期维护更好",
     },
     {
       line: "「压力马斯内」",
-      note: "余额血条掉到最后一格勾玉时的真实心境",
+      note: "余额告急，及时关注",
     },
   ];
 
@@ -200,7 +200,7 @@
         if (teaCountEl) teaCountEl.textContent = String(teaCount);
         const q = FIELD_QUOTES[quoteIndex];
         if (teaToast) {
-          teaToast.textContent = `已敬第 ${teaCount} 杯冰红茶 · ${q.line}（${q.note}）`;
+          teaToast.textContent = `已奉上第 ${teaCount} 杯红茶 · ${q.line}`;
         }
       });
     }
@@ -257,7 +257,7 @@
       main.appendChild(code);
 
       const note = document.createElement("small");
-      note.textContent = `✓ 程序验算通过：${res.expression} === ${res.verifiedValue}（仅含数字 1、4、5，Q.E.D.）`;
+      note.textContent = `✓ 验算成立：${res.expression} = ${res.verifiedValue}（Q.E.D.）`;
 
       resultEl.appendChild(main);
       resultEl.appendChild(note);
