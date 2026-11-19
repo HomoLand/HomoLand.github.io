@@ -12,8 +12,9 @@
     <meta property="og:description" content="人类未来的愿景与挑战 · 自托管工具、网关与实验项目">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://homo.land">
-    <meta property="og:image" content="https://avatars.githubusercontent.com/u/143146450?v=4">
+    <meta property="og:image" content="https://homo.land/assets/homolab-halftone.png">
     <link rel="canonical" href="https://homo.land">
+    <link rel="icon" type="image/svg+xml" href="./assets/homolab-mark.svg">
     <link rel="stylesheet" href="./styles.css">
     <script src="./app.js" defer></script>
   </head>
@@ -26,10 +27,10 @@
     <header class="site-header" aria-label="Site header">
       <a class="brand" href="#top" aria-label="HomoLand home">
         <img
-          src="https://avatars.githubusercontent.com/u/143146450?v=4"
-          alt="HomoLand avatar"
-          width="40"
-          height="40"
+          src="./assets/homolab-mark.svg"
+          alt="HOMOLAB emblem"
+          width="38"
+          height="38"
         >
         <span class="brand-name">HomoLand</span>
         <span class="brand-badge">NO. 114514</span>
@@ -48,9 +49,9 @@
           class="theme-toggle"
           type="button"
           aria-pressed="false"
-          title="切换午后红茶 / 昏睡 VHS 模式"
+          title="切换午后红茶 / 夜间红茶 VHS 模式"
         >
-          ☕ 昏睡模式
+          ☾ 夜间红茶
         </button>
       </div>
     </header>
@@ -58,40 +59,40 @@
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="tape-strip">CH-04 · SHIMOKITAZAWA · 11:45:14 · GITHUB.COM/HOMOLAND</p>
+          <p class="tape-strip">STN-04 · SHIMOKITAZAWA · 11:45:14 · GITHUB.COM/HOMOLAND</p>
           <h1 id="hero-title">The Promised Land of Homo</h1>
           <p class="hero-subtitle">人类未来的愿景与挑战</p>
           <p class="hero-text">
-            聚焦自托管基础设施、硬件 BLE 控制、跨平台曲库同步、轻量隧道网关与 DSH 生态插件的独立开源组织。
+            常驻下北泽（精神意义），专注自托管基础设施、93°C 控温冲煮红茶与咖啡、跨平台红心歌单同步、轻量隧道网关与 DSH 血条插件——既然都要写代码，不如走一条王道征途。
           </p>
 
           <div class="hero-actions" aria-label="Primary actions">
             <a class="button button-primary" href="#projects">看全部项目 (7)</a>
-            <a class="button" href="#members">认识 5 位先辈</a>
+            <a class="button" href="#members">核心成员 (5)</a>
             <button id="tea-btn" class="button button-tea" type="button">
               ☕ 请我喝红茶 <span id="tea-count" class="tea-count">0</span>
             </button>
           </div>
 
           <p id="tea-toast" class="tea-toast" role="status" aria-live="polite">
-            红茶可以吗？
+            红茶可以吗？刚用 xBloom 93°C 泡好。
           </p>
 
           <dl class="metrics-strip" aria-label="Organization metrics">
             <div class="metric-cell">
-              <dt>全员 Admin 同居人</dt>
+              <dt>核心成员（Admin）</dt>
               <dd>05</dd>
             </div>
             <div class="metric-cell">
-              <dt>活跃公开仓库</dt>
+              <dt>公开工程仓库</dt>
               <dd>07</dd>
             </div>
             <div class="metric-cell">
-              <dt>恒定精神年龄（岁）</dt>
+              <dt>平均研究员年龄</dt>
               <dd>24</dd>
             </div>
             <div class="metric-cell">
-              <dt>自托管执念浓度</dt>
+              <dt>自托管覆盖率</dt>
               <dd>114%</dd>
             </div>
           </dl>
@@ -106,11 +107,11 @@
               width="74"
               height="74"
               role="img"
-              aria-label="先辈认证 114514 印章"
+              aria-label="HOMOLAB 114514 印章"
             >
               <circle cx="48" cy="48" r="43" fill="none" stroke="currentColor" stroke-width="2.5" stroke-dasharray="5 3" />
               <circle cx="48" cy="48" r="35" fill="none" stroke="currentColor" stroke-width="1.5" />
-              <text x="48" y="42" text-anchor="middle" font-size="13" font-weight="800" fill="currentColor">先辈认证</text>
+              <text x="48" y="42" text-anchor="middle" font-size="12" font-weight="800" fill="currentColor" font-family="monospace">HOMOLAB</text>
               <text x="48" y="61" text-anchor="middle" font-size="12" font-weight="800" fill="currentColor" font-family="monospace">114514</text>
             </svg>
           </div>
@@ -118,13 +119,13 @@
           <div class="dossier-head">
             <img
               class="identity-avatar"
-              src="https://avatars.githubusercontent.com/u/143146450?v=4"
-              alt="HomoLand organization avatar"
+              src="./assets/homolab-halftone.svg"
+              alt="HOMOLAB halftone emblem"
               width="96"
               height="96"
             >
             <div class="dossier-id">
-              <strong>HOMOLAND LAB</strong>
+              <strong>HOMOLAB</strong>
               <span>应许之地档案馆</span>
               <small>EST. 2023.08.25</small>
             </div>
@@ -133,7 +134,7 @@
           <dl class="dossier-facts">
             <div>
               <dt>Location</dt>
-              <dd>下北泽 / Japan</dd>
+              <dd>Shimokitazawa, JP</dd>
             </div>
             <div>
               <dt>Domain</dt>
@@ -145,18 +146,21 @@
             </div>
             <div>
               <dt>Status</dt>
-              <dd>24岁，是开源组织</dd>
+              <dd>24岁，是研究组织</dd>
             </div>
           </dl>
 
           <div class="quote-card" aria-label="Field notes">
             <div class="quote-card-head">
-              <strong>FIELD NOTES · 屋顶语录</strong>
-              <button id="quote-next" class="quote-next" type="button">换一条 ↻</button>
+              <strong>FIELD NOTES · 档案摘录</strong>
+              <div class="quote-card-actions">
+                <span id="quote-index" class="quote-index">01 / 16</span>
+                <button id="quote-next" class="quote-next" type="button">换一条 ↻</button>
+              </div>
             </div>
             <blockquote id="quote-box" class="quote-box">
-              <p class="quote-line">「いいよ、来いよ」</p>
-              <footer class="quote-note">PR 欢迎，直接提就行</footer>
+              <p class="quote-line">「红茶可以吗？」</p>
+              <footer class="quote-note">xBloom 93°C 控温冲煮已就绪</footer>
             </blockquote>
           </div>
         </aside>
@@ -164,9 +168,9 @@
 
       <section id="members" class="members-section" aria-labelledby="members-title">
         <div class="section-heading">
-          <p class="kicker">HOUSEMATES</p>
-          <h2 id="members-title">屋顶的五位先辈</h2>
-          <p class="section-subtitle">全员 Admin，HomoLand 成员档案。</p>
+          <p class="kicker">MEMBERS</p>
+          <h2 id="members-title">核心成员</h2>
+          <p class="section-subtitle">全员 Admin，HOMOLAB 成员档案。</p>
         </div>
 
         <div class="member-grid">
@@ -186,7 +190,7 @@
                   <span class="role-badge">ADMIN</span>
                 </div>
                 <p class="member-handle">@SajoLuo</p>
-                <p class="member-title">屋顶茶艺师 · Infra &amp; Hardware</p>
+                <p class="member-title">茶艺与基础设施 · Infra &amp; Hardware</p>
               </div>
             </div>
             <p class="member-bio">
@@ -198,7 +202,7 @@
               <li>Python</li>
               <li>Homelab</li>
             </ul>
-            <p class="member-note">「先用 xBloom 冲一杯 93°C 红茶再修 Bug」</p>
+            <p class="member-note">「先用 xBloom 冲一杯 93°C 红茶再排查问题」</p>
             <div class="member-links">
               <a href="https://github.com/SajoLuo" target="_blank" rel="noopener">GitHub ↗</a>
               <a href="https://blog.sajo.cc" target="_blank" rel="noopener">Blog ↗</a>
@@ -221,7 +225,7 @@
                   <span class="role-badge">ADMIN</span>
                 </div>
                 <p class="member-handle">@maoyulong413</p>
-                <p class="member-title">血条锻造师 · DSH Plugins</p>
+                <p class="member-title">插件与补丁 · DSH Plugins</p>
               </div>
             </div>
             <p class="member-bio">
@@ -232,7 +236,7 @@
               <li>Shell</li>
               <li>DSH 插件</li>
             </ul>
-            <p class="member-note">「余额掉到最后一格勾玉，压力马斯内」</p>
+            <p class="member-note">「余额还剩最后一格勾玉，压力马斯内」</p>
             <div class="member-links">
               <a href="https://github.com/maoyulong413" target="_blank" rel="noopener">GitHub ↗</a>
               <a href="https://github.com/HomoLand/dshp-balance-hp" target="_blank" rel="noopener">dshp-balance-hp ↗</a>
@@ -255,7 +259,7 @@
                   <span class="role-badge">ADMIN</span>
                 </div>
                 <p class="member-handle">@ztelliot</p>
-                <p class="member-title">测速观测员 · Go &amp; Networking</p>
+                <p class="member-title">网络与测速 · Go &amp; Networking</p>
               </div>
             </div>
             <p class="member-bio">
@@ -267,7 +271,7 @@
               <li>TypeScript</li>
               <li>Network</li>
             </ul>
-            <p class="member-note">「先跑一轮 mtr，看看下北泽延迟是不是 114ms」</p>
+            <p class="member-note">「先跑一轮 mtr，看看东京节点延迟是不是 114ms」</p>
             <div class="member-links">
               <a href="https://github.com/ztelliot" target="_blank" rel="noopener">GitHub ↗</a>
               <a href="https://github.com/ztelliot/taierspeed-cli" target="_blank" rel="noopener">taierspeed-cli ↗</a>
@@ -290,7 +294,7 @@
                   <span class="role-badge">ADMIN</span>
                 </div>
                 <p class="member-handle">@sarailQAQ</p>
-                <p class="member-title">存储炼金师 · Systems &amp; DB</p>
+                <p class="member-title">存储与引擎 · Systems &amp; DB</p>
               </div>
             </div>
             <p class="member-bio">
@@ -302,7 +306,7 @@
               <li>Go</li>
               <li>Database</li>
             </ul>
-            <p class="member-note">「LSM-Tree Compaction 中，屋顶日光浴勿扰」</p>
+            <p class="member-note">「LSM-Tree Compaction 中，午后勿扰」</p>
             <div class="member-links">
               <a href="https://github.com/sarailQAQ" target="_blank" rel="noopener">GitHub ↗</a>
               <a href="https://sarailqaq.org.cn" target="_blank" rel="noopener">主页 ↗</a>
@@ -325,7 +329,7 @@
                   <span class="role-badge">ADMIN</span>
                 </div>
                 <p class="member-handle">@RayleighZ</p>
-                <p class="member-title">斜方肌抗争者 · Embedded &amp; Ops</p>
+                <p class="member-title">嵌入式与运维 · Embedded &amp; Ops</p>
               </div>
             </div>
             <p class="member-bio">
@@ -617,7 +621,7 @@
         <span>Updated 2026-11-19</span>
       </div>
       <div class="footer-right">
-        <button id="homo-calc-open" class="footer-button" type="button">114514 数字论证</button>
+        <button id="homo-calc-open" class="footer-button" type="button">NO. 114514 验算</button>
         <a href="https://github.com/HomoLand" target="_blank" rel="noopener">Organization</a>
         <a href="https://github.com/HomoLand/HomoLand.github.io" target="_blank" rel="noopener">Page source</a>
       </div>

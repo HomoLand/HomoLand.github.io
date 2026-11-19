@@ -177,6 +177,7 @@ input:focus-visible {
   border: 1px solid var(--line-strong);
   border-radius: 50%;
   background: var(--sheet);
+  display: block;
 }
 
 .brand-name {
@@ -472,13 +473,14 @@ h1::first-line {
 }
 
 .identity-avatar {
-  width: 76px;
-  height: 76px;
+  width: 88px;
+  height: 88px;
   border: 1px solid var(--line-strong);
   border-radius: 6px;
   background: var(--sheet);
   object-fit: cover;
   flex: 0 0 auto;
+  display: block;
 }
 
 .dossier-id {
@@ -550,7 +552,8 @@ h1::first-line {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px 8px;
   margin-bottom: 8px;
   font-family: var(--mono);
 }
@@ -558,6 +561,23 @@ h1::first-line {
 .quote-card-head strong {
   color: var(--oxblood);
   font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.quote-card-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.quote-index {
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .quote-next {
@@ -569,6 +589,7 @@ h1::first-line {
   font-size: 0.72rem;
   font-weight: 700;
   background: var(--chip-bg);
+  white-space: nowrap;
   cursor: pointer;
 }
 

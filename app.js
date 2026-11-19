@@ -1,28 +1,68 @@
 (() => {
   const FIELD_QUOTES = [
     {
+      line: "「红茶可以吗？」",
+      note: "xBloom 93°C 控温冲煮已就绪",
+    },
+    {
       line: "「いいよ、来いよ」",
-      note: "欢迎提交 PR",
+      note: "欢迎提交 PR，代码直接推",
     },
     {
       line: "「やりますねぇ」",
-      note: "CI 全绿，构建通过",
-    },
-    {
-      line: "「红茶可以吗？」",
-      note: "xBloom 93°C 手冲就绪",
-    },
-    {
-      line: "「24岁，是学生」",
-      note: "全员 Admin 维护中",
+      note: "CI 全绿，一次过审",
     },
     {
       line: "「王道征途」",
       note: "能跑就行，能长期维护更好",
     },
     {
+      line: "「24岁，是学生」",
+      note: "也是五个全员 Admin 的维护者",
+    },
+    {
       line: "「压力马斯内」",
-      note: "余额告急，及时关注",
+      note: "余额掉到最后一格勾玉，紧急关注",
+    },
+    {
+      line: "「好时代，来临力」",
+      note: "依赖告警清零，Pages 构建通过",
+    },
+    {
+      line: "「你是一个一个一个……」",
+      note: "逐条 Squash Merge Dependabot PR 中",
+    },
+    {
+      line: "「事已至此，先喝红茶吧」",
+      note: "遇到玄学 Bug 时的第一阶段应急预案",
+    },
+    {
+      line: "「首先，这是个好主意（确信）」",
+      note: "在 Homelab 里再多起一个自托管服务",
+    },
+    {
+      line: "「这么臭的文档还有必要看吗（悲）」",
+      note: "于是顺手重写了一版 README",
+    },
+    {
+      line: "「暴论不可避」",
+      note: "技术选型讨论会（全员 Admin 无否决权）",
+    },
+    {
+      line: "「要素过多」",
+      note: "集咖啡机、歌单、隧道网关与血条于一身",
+    },
+    {
+      line: "「真夏の夜の夢」",
+      note: "上线前夜，测试环境一切安好",
+    },
+    {
+      line: "「哼、哼、啊啊啊啊啊」",
+      note: "凌晨两点排查锁文件冲突时的精神状态",
+    },
+    {
+      line: "「悔改吧！」",
+      note: "致忘记 --frozen-lockfile 的提交者",
     },
   ];
 
@@ -144,7 +184,7 @@
       }
       if (themeToggle) {
         themeToggle.setAttribute("aria-pressed", String(isVhs));
-        themeToggle.textContent = isVhs ? "☀️ 午后红茶" : "☕ 昏睡模式";
+        themeToggle.textContent = isVhs ? "☀️ 午后红茶" : "☾ 夜间红茶";
       }
     }
 
@@ -169,6 +209,7 @@
 
     // 2. Field notes & Tea hospitality counter
     const quoteBox = document.getElementById("quote-box");
+    const quoteIndexEl = document.getElementById("quote-index");
     const quoteNext = document.getElementById("quote-next");
     const teaBtn = document.getElementById("tea-btn");
     const teaCountEl = document.getElementById("tea-count");
@@ -177,7 +218,13 @@
     let teaCount = 0;
 
     function renderQuote(idx) {
-      const q = FIELD_QUOTES[idx % FIELD_QUOTES.length];
+      const safeIdx = idx % FIELD_QUOTES.length;
+      const q = FIELD_QUOTES[safeIdx];
+      if (quoteIndexEl) {
+        const cur = String(safeIdx + 1).padStart(2, "0");
+        const total = String(FIELD_QUOTES.length).padStart(2, "0");
+        quoteIndexEl.textContent = `${cur} / ${total}`;
+      }
       if (!quoteBox) return;
       const lineEl = quoteBox.querySelector(".quote-line");
       const noteEl = quoteBox.querySelector(".quote-note");
@@ -200,7 +247,13 @@
         if (teaCountEl) teaCountEl.textContent = String(teaCount);
         const q = FIELD_QUOTES[quoteIndex];
         if (teaToast) {
-          teaToast.textContent = `已奉上第 ${teaCount} 杯红茶 · ${q.line}`;
+          let milestone = "";
+          if (teaCount === 24) {
+            milestone = " · 24 杯达成：恒定研究员年龄解锁";
+          } else if (teaCount === 114) {
+            milestone = " · 114 杯达成：压力马斯内，红茶壶已过载";
+          }
+          teaToast.textContent = `已奉上第 ${teaCount} 杯红茶 · ${q.line}（${q.note}）${milestone}`;
         }
       });
     }
