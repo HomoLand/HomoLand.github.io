@@ -949,6 +949,62 @@ h1::first-line {
   align-items: start;
 }
 
+.manifesto-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.manifesto-lang-label {
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lang-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.lang-chip {
+  min-height: 30px;
+  padding: 0 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--ink-soft);
+  font-family: var(--body);
+  font-size: 0.76rem;
+  font-weight: 700;
+  background: var(--paper);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+
+.lang-chip:hover {
+  color: var(--oxblood);
+  background: var(--sheet-warm);
+}
+
+.lang-chip.is-active {
+  color: var(--btn-primary-ink);
+  background: var(--oxblood);
+  border-color: var(--oxblood);
+}
+
+.manifesto-content {
+  overflow-wrap: break-word;
+}
+
 .readme-title {
   margin: 0 0 18px;
   font-family: var(--display);
