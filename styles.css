@@ -687,7 +687,8 @@ h1::first-line {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px 8px;
 }
 
 .member-name-row h3 {
@@ -696,6 +697,34 @@ h1::first-line {
   font-family: var(--display);
   font-size: 1.2rem;
   font-weight: 700;
+}
+
+.member-aka {
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.member-badges {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 5px;
+  margin-left: auto;
+}
+
+.affil-badge {
+  padding: 2px 7px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--olive);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 800;
+  background: var(--paper);
+  white-space: nowrap;
 }
 
 .role-badge {
@@ -707,6 +736,7 @@ h1::first-line {
   font-size: 0.66rem;
   font-weight: 800;
   background: var(--chip-bg);
+  white-space: nowrap;
 }
 
 .member-handle {
