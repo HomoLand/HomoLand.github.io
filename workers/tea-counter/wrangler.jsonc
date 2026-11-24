@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "homoland-tea-counter",
+  "main": "worker.js",
+  "compatibility_date": "2026-11-24",
+  "observability": {
+    "enabled": true,
+    "traces": {
+      "enabled": true
+    }
+  },
+  "routes": [
+    {
+      "pattern": "api.homo.land",
+      "custom_domain": true
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "homoland-tea",
+      "database_id": "8547676c-5701-4b5f-beb7-7dbe3bc3b8e5"
+    }
+  ]
+}

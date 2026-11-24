@@ -434,34 +434,44 @@
   function initBrowserUI() {
     if (typeof document === "undefined") return;
 
-    // 1. Theme toggle (Afternoon Tea / Sleepy VHS)
+    // 0. Scroll-aware top header
+    const siteHeader = document.getElementById("site-header");
+    function syncHeaderScroll() {
+      if (!siteHeader) return;
+      siteHeader.classList.toggle("is-scrolled", window.scrollY > 16);
+    }
+    syncHeaderScroll();
+    window.addEventListener("scroll", syncHeaderScroll, { passive: true });
+
+    // 1. Theme switch (Daylight / Night Tea VHS)
     const root = document.documentElement;
-    const themeToggle = document.getElementById("theme-toggle");
+    const themeOptions = Array.from(document.querySelectorAll("[data-theme-choice]"));
     const THEME_KEY = "homoland-theme";
 
     function applyTheme(theme) {
-      const isVhs = theme === "vhs";
-      if (isVhs) {
+      const resolved = theme === "vhs" ? "vhs" : "tea";
+      if (resolved === "vhs") {
         root.setAttribute("data-theme", "vhs");
       } else {
         root.removeAttribute("data-theme");
       }
-      if (themeToggle) {
-        themeToggle.setAttribute("aria-pressed", String(isVhs));
-        themeToggle.textContent = isVhs ? "☀️ 午后红茶" : "☾ 夜间红茶";
+      for (const btn of themeOptions) {
+        const active = btn.getAttribute("data-theme-choice") === resolved;
+        btn.classList.toggle("is-active", active);
+        btn.setAttribute("aria-checked", String(active));
       }
     }
 
     try {
       const saved = localStorage.getItem(THEME_KEY);
-      if (saved === "vhs") applyTheme("vhs");
+      applyTheme(saved === "vhs" ? "vhs" : "tea");
     } catch {
-      // Ignore storage access errors in restricted modes.
+      applyTheme("tea");
     }
 
-    if (themeToggle) {
-      themeToggle.addEventListener("click", () => {
-        const next = root.getAttribute("data-theme") === "vhs" ? "tea" : "vhs";
+    for (const btn of themeOptions) {
+      btn.addEventListener("click", () => {
+        const next = btn.getAttribute("data-theme-choice") === "vhs" ? "vhs" : "tea";
         applyTheme(next);
         try {
           localStorage.setItem(THEME_KEY, next);
@@ -471,7 +481,8 @@
       });
     }
 
-    // 2. Field notes & Tea hospitality counter
+    // 2. Field notes & Global Tea hospitality counter (Cloudflare Worker + D1)
+    const TEA_API_URL = "https://api.homo.land/tea";
     const quoteBox = document.getElementById("quote-box");
     const quoteIndexEl = document.getElementById("quote-index");
     const quoteNext = document.getElementById("quote-next");
@@ -479,7 +490,34 @@
     const teaCountEl = document.getElementById("tea-count");
     const teaToast = document.getElementById("tea-toast");
     let quoteIndex = 0;
-    let teaCount = 0;
+    let serverTeaCount = 0;
+    let pendingTeaClicks = 0;
+    let offlineTeaCount = 0;
+    let teaSynced = false;
+
+    function getDisplayedTeaCount() {
+      return teaSynced ? serverTeaCount + pendingTeaClicks : offlineTeaCount;
+    }
+
+    function renderTeaCount() {
+      if (teaCountEl) {
+        teaCountEl.textContent = String(getDisplayedTeaCount());
+      }
+    }
+
+    function renderTeaToast(count, q, isGlobal) {
+      if (!teaToast) return;
+      let milestone = "";
+      if (count === 24) {
+        milestone = " · 24 杯达成：恒定研究员年龄解锁";
+      } else if (count === 114) {
+        milestone = " · 114 杯达成：压力马斯内，红茶壶已过载";
+      } else if (count === 114514) {
+        milestone = " · 114514 杯达成：应许之地完全体";
+      }
+      const prefix = isGlobal ? `已奉上全站第 ${count} 杯红茶` : `已奉上第 ${count} 杯红茶`;
+      teaToast.textContent = `${prefix} · ${q.line}（${q.note}）${milestone}`;
+    }
 
     function renderQuote(idx) {
       const safeIdx = idx % FIELD_QUOTES.length;
@@ -503,28 +541,76 @@
       });
     }
 
+    async function loadGlobalTeaCount() {
+      if (typeof fetch !== "function") return;
+      try {
+        const res = await fetch(TEA_API_URL, { method: "GET", mode: "cors", cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data && typeof data.count === "number" && Number.isFinite(data.count)) {
+          serverTeaCount = Math.max(serverTeaCount, data.count);
+          teaSynced = true;
+          renderTeaCount();
+        }
+      } catch {
+        // Keep local fallback silently when offline or blocked.
+      }
+    }
+
+    loadGlobalTeaCount();
+
     if (teaBtn) {
-      teaBtn.addEventListener("click", () => {
-        teaCount += 1;
+      teaBtn.addEventListener("click", async () => {
         quoteIndex = (quoteIndex + 1) % FIELD_QUOTES.length;
         renderQuote(quoteIndex);
-        if (teaCountEl) teaCountEl.textContent = String(teaCount);
         const q = FIELD_QUOTES[quoteIndex];
-        if (teaToast) {
-          let milestone = "";
-          if (teaCount === 24) {
-            milestone = " · 24 杯达成：恒定研究员年龄解锁";
-          } else if (teaCount === 114) {
-            milestone = " · 114 杯达成：压力马斯内，红茶壶已过载";
+
+        if (teaSynced) {
+          pendingTeaClicks += 1;
+        } else {
+          offlineTeaCount += 1;
+        }
+        renderTeaCount();
+        renderTeaToast(getDisplayedTeaCount(), q, teaSynced);
+
+        if (typeof fetch !== "function") return;
+        try {
+          const res = await fetch(TEA_API_URL, { method: "POST", mode: "cors", cache: "no-store" });
+          const data = await res.json().catch(() => null);
+          if (teaSynced) {
+            pendingTeaClicks = Math.max(0, pendingTeaClicks - 1);
           }
-          teaToast.textContent = `已奉上第 ${teaCount} 杯红茶 · ${q.line}（${q.note}）${milestone}`;
+          if (res.ok && data && typeof data.count === "number" && Number.isFinite(data.count)) {
+            serverTeaCount = Math.max(serverTeaCount, data.count);
+            teaSynced = true;
+            renderTeaCount();
+            renderTeaToast(getDisplayedTeaCount(), q, true);
+            return;
+          }
+          if (res.status === 429 && data) {
+            if (typeof data.count === "number" && Number.isFinite(data.count)) {
+              serverTeaCount = Math.max(serverTeaCount, data.count);
+              teaSynced = true;
+            }
+            renderTeaCount();
+            if (teaToast) {
+              teaToast.textContent = `红茶壶稍微烫手，歇一会儿再来（当前全站累计 ${serverTeaCount} 杯）`;
+            }
+            return;
+          }
+          renderTeaCount();
+        } catch {
+          if (teaSynced) {
+            pendingTeaClicks = Math.max(0, pendingTeaClicks - 1);
+          }
+          renderTeaCount();
         }
       });
     }
 
     // 3. Project category filter
-    const filterButtons = Array.from(document.querySelectorAll(".filter-chip"));
-    const projectCards = Array.from(document.querySelectorAll("#project-grid .project-card"));
+    const filterButtons = Array.from(document.querySelectorAll("[data-filter]"));
+    const projectCells = Array.from(document.querySelectorAll("#project-grid .project-cell"));
 
     function applyFilter(filter) {
       for (const btn of filterButtons) {
@@ -532,10 +618,14 @@
         btn.classList.toggle("is-active", active);
         btn.setAttribute("aria-selected", String(active));
       }
-      for (const card of projectCards) {
-        const cat = card.getAttribute("data-category");
+      for (const cell of projectCells) {
+        const cat = cell.getAttribute("data-category");
         const visible = filter === "all" || cat === filter;
-        card.hidden = !visible;
+        cell.hidden = !visible;
+        if (visible && cell.classList.contains("is-pending")) {
+          cell.classList.remove("is-pending");
+          cell.classList.add("is-visible");
+        }
       }
     }
 
@@ -554,7 +644,16 @@
     const resultEl = document.getElementById("homo-result");
     const presetChips = Array.from(document.querySelectorAll(".preset-chip"));
 
+    function syncPresetActive(val) {
+      const normalized = String(val ?? "").trim();
+      for (const chip of presetChips) {
+        const active = chip.getAttribute("data-num") === normalized;
+        chip.classList.toggle("is-active", active);
+      }
+    }
+
     function renderProof(val) {
+      syncPresetActive(val);
       if (!resultEl) return;
       const res = proveHomoNumber(val);
       if (!res.ok) {
@@ -644,12 +743,12 @@
 
       const frag = document.createDocumentFragment();
       const titleEl = document.createElement("h3");
-      titleEl.className = "readme-title";
+      titleEl.className = "manifesto-title";
       const mainSpan = document.createElement("span");
-      mainSpan.className = "readme-title-main";
+      mainSpan.className = "manifesto-title-main";
       mainSpan.textContent = edition.titleMain;
       const subSpan = document.createElement("span");
-      subSpan.className = "readme-title-sub";
+      subSpan.className = "manifesto-title-sub";
       subSpan.textContent = edition.titleSub;
       titleEl.appendChild(mainSpan);
       titleEl.appendChild(subSpan);
@@ -713,6 +812,44 @@
             // Ignore storage errors.
           }
         });
+      }
+    }
+
+    // 6. Progressive scroll reveals (below-the-fold only, reduced-motion safe)
+    const reduceMotion =
+      typeof window !== "undefined" &&
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!reduceMotion && typeof IntersectionObserver !== "undefined") {
+      const revealNodes = Array.from(
+        document.querySelectorAll(
+          ".section-band .section-head, .roster-row, .project-cell, .monograph-layout"
+        )
+      );
+      const viewportThreshold = window.innerHeight * 0.92;
+      const pendingNodes = revealNodes.filter((el) => {
+        const rect = el.getBoundingClientRect();
+        return rect.top > viewportThreshold;
+      });
+
+      if (pendingNodes.length > 0) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              entry.target.classList.remove("is-pending");
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          },
+          { rootMargin: "0px 0px -6% 0px", threshold: 0.04 }
+        );
+
+        for (const node of pendingNodes) {
+          node.classList.add("reveal-target", "is-pending");
+          observer.observe(node);
+        }
       }
     }
   }
